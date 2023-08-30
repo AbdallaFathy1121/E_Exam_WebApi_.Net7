@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\E_Exam_WebAPI.props" />
+</Project>
