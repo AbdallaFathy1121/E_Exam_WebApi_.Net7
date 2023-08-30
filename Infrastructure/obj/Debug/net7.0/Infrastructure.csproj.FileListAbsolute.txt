@@ -17,3 +17,4 @@ E:\Asp.net Projects\E_Exam_WebApi\Infrastructure\obj\Debug\net7.0\refint\Infrast
 E:\Asp.net Projects\E_Exam_WebApi\Infrastructure\obj\Debug\net7.0\Infrastructure.pdb
 E:\Asp.net Projects\E_Exam_WebApi\Infrastructure\obj\Debug\net7.0\Infrastructure.genruntimeconfig.cache
 E:\Asp.net Projects\E_Exam_WebApi\Infrastructure\obj\Debug\net7.0\ref\Infrastructure.dll
+E:\Asp.net Projects\E_Exam_WebApi\Infrastructure\obj\Debug\net7.0\Infrastructure.sourcelink.json

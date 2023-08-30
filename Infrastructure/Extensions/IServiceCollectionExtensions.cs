@@ -1,6 +1,10 @@
 ﻿using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
+using Domain.Entities;
 using Infrastructure.Context;
 using Infrastructure.Repositories;
+using Infrastructure.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -32,7 +36,9 @@ namespace Infrastructure.Extensions
         private static void AddRepositories(this IServiceCollection services)
         {
             services
-                .AddTransient(typeof(IUnitOfWork), typeof(UnitOfWork));
+                .AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork))
+                .AddTransient(typeof(IUserService), typeof(UserService))
+                .AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
     }

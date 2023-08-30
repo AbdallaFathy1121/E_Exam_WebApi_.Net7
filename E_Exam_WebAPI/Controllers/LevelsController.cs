@@ -1,8 +1,7 @@
 ﻿using Application.Interfaces.Repositories;
 using Domain.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace E_Exam_WebAPI.Controllers
 {
@@ -27,7 +26,7 @@ namespace E_Exam_WebAPI.Controllers
 
         // GET api/<LevelsController>/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> Levels(int id)
+        public async Task<IActionResult> GetLevelById(int id)
         {
             var result = await _unitOfWork.LevelRepository.GetFirstAsync(a => a.Id == id);
             return Ok(result);
@@ -35,7 +34,7 @@ namespace E_Exam_WebAPI.Controllers
 
         // POST api/<LevelsController>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] string name)
+        public async Task<IActionResult> CreateNewLevel([FromBody] string name)
         {
             var model = new Level { LevelName =  name };
             var result = await _unitOfWork.LevelRepository.AddAsync(model);
@@ -44,8 +43,8 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // PUT api/<LevelsController>/5
-        [HttpPost("Update/{id}")]
-        public async Task<IActionResult> Put(int id, [FromBody] string name)
+        [HttpPost("UpdateLevelById/{id}")]
+        public async Task<IActionResult> UpdateLevelById(int id, [FromBody] string name)
         {
             var exists = await _unitOfWork.LevelRepository.GetFirstAsync(a => a.Id == id);
             if (exists is not null)
@@ -63,8 +62,8 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // DELETE api/<LevelsController>/5
-        [HttpPost("Delete/{id}")]
-        public async Task<IActionResult> Delete(int id)
+        [HttpPost("DeleteById/{id}")]
+        public async Task<IActionResult> DeleteById(int id)
         {
             var exists = await _unitOfWork.LevelRepository.GetFirstAsync(a => a.Id == id);
             if (exists is not null)
