@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -17,5 +18,10 @@ namespace Infrastructure.Context
 
 
         public DbSet<Level> Levels { get; set; }
+
+        internal Task FindAsync<T>(Expression<Func<T, bool>> match) where T : class
+        {
+            throw new NotImplementedException();
+        }
     }
 }

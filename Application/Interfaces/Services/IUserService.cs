@@ -10,6 +10,9 @@ namespace Application.Interfaces.Services
 {
     public interface IUserService
     {
-        Task<MainResponse> CreateNewUser(RegisterDTO dto);
+        Task<MainResponse> RegisterAsync(RegisterDTO dto);
+        Task<MainResponse> LoginAsync(LoginDTO dto);
+        Task<MainResponse> GetAllUsersAsync();
+        Task<MainResponse> DeleteUserByIdAsync(DeleteUserDTO dto);
     }
 }

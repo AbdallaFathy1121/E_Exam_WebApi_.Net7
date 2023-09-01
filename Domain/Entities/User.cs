@@ -9,5 +9,6 @@ namespace Domain.Entities
 {
     public class User: IdentityUser
     {
+        public bool IsTeacher { get; set; } = false;
     }
 }

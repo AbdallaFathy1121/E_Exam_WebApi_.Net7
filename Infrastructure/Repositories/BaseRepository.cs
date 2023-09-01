@@ -8,7 +8,6 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
-using static Microsoft.EntityFrameworkCore.DbLoggerCategory;
 
 namespace Infrastructure.Repositories
 {
@@ -23,7 +22,7 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _context.Set<T>().ToListAsync();
+            return await _context.Set<T>().AsNoTracking().ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetWhereAsync(
@@ -31,7 +30,7 @@ namespace Infrastructure.Repositories
             Expression<Func<T, object>>? orderBy, 
             string orderByDirection = "ASC")
         {
-            IQueryable<T> query = _context.Set<T>().Where(match);
+            IQueryable<T> query = _context.Set<T>().AsNoTracking().Where(match);
 
             if (orderBy is not null)
             {
@@ -46,18 +45,18 @@ namespace Infrastructure.Repositories
 
         public async Task<T> GetFirstAsync(Expression<Func<T, bool>> match)
         {
-            var result = await _context.Set<T>().FirstOrDefaultAsync(match);
+            var result = await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(match);
             return result;
         }
-        
+
         public async Task<int> CountAsync(Expression<Func<T, bool>> criteria)
         {
-            return await _context.Set<T>().AsQueryable().CountAsync(criteria);
+            return await _context.Set<T>().AsNoTracking().AsQueryable().CountAsync(criteria);
         }
         
         public async Task<int> CountAsync()
         {
-            return await _context.Set<T>().AsQueryable().CountAsync();
+            return await _context.Set<T>().AsNoTracking().AsQueryable().CountAsync();
         }
         
         public async Task<T> AddAsync(T entity)
@@ -66,13 +65,13 @@ namespace Infrastructure.Repositories
             return entity;
         }
 
-        public Task Update(T entity)
+        public T Update(T entity)
         {
-            _context.Entry(entity).CurrentValues.SetValues(entity);
-            return Task.CompletedTask;
+            _context.Set<T>().Update(entity);
+            return entity;
         }
         
-        public Task DeleteAsync(T entity)
+        public Task Delete(T entity)
         {
             _context.Set<T>().Remove(entity);
             return Task.CompletedTask;

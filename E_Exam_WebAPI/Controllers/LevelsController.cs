@@ -1,4 +1,6 @@
-﻿using Application.Interfaces.Repositories;
+﻿using Application.DTOs.Level;
+using Application.Interfaces.Repositories;
+using Application.Interfaces.Services;
 using Domain.Entities;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -9,74 +11,66 @@ namespace E_Exam_WebAPI.Controllers
     [ApiController]
     public class LevelsController : ControllerBase
     {
-        private readonly IUnitOfWork _unitOfWork;
-        public LevelsController(IUnitOfWork unitOfWork)
+        private readonly ILevelService _levelService;
+        public LevelsController(ILevelService levelService)
         {
-            _unitOfWork = unitOfWork;
+            _levelService = levelService;
         }
 
 
-        // GET: api/<LevelsController>
+        // GET: api/Levels
         [HttpGet]
-        public async Task<IActionResult> Levels()
+        public async Task<IActionResult> GetAllLevelsAsync()
         {
-            var result = await _unitOfWork.LevelRepository.GetAllAsync();
-            return Ok(result);
+            var result = await _levelService.GetAllLevelsAsync();
+            if (result.IsSuccess)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
 
-        // GET api/<LevelsController>/5
+        // GET api/Levels/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetLevelById(int id)
+        public async Task<IActionResult> GetLevelByIdAsync(int id)
         {
-            var result = await _unitOfWork.LevelRepository.GetFirstAsync(a => a.Id == id);
-            return Ok(result);
-        }
-
-        // POST api/<LevelsController>
-        [HttpPost]
-        public async Task<IActionResult> CreateNewLevel([FromBody] string name)
-        {
-            var model = new Level { LevelName =  name };
-            var result = await _unitOfWork.LevelRepository.AddAsync(model);
-            await _unitOfWork.Complete();
-            return Ok(result);
-        }
-
-        // PUT api/<LevelsController>/5
-        [HttpPost("UpdateLevelById/{id}")]
-        public async Task<IActionResult> UpdateLevelById(int id, [FromBody] string name)
-        {
-            var exists = await _unitOfWork.LevelRepository.GetFirstAsync(a => a.Id == id);
-            if (exists is not null)
-            {
-                exists.LevelName = name;
-                await _unitOfWork.LevelRepository.Update(exists);
-                await _unitOfWork.Complete();
-
-                return Ok(exists);
-            }
+            var result = await _levelService.GetLevelByIdAsync(id);
+            if (result.IsSuccess)
+                return Ok(result);
             else
-            {
-                return NotFound("Not found Level with ID: " + id);
-            }
+                return NotFound(result);
         }
 
-        // DELETE api/<LevelsController>/5
-        [HttpPost("DeleteById/{id}")]
-        public async Task<IActionResult> DeleteById(int id)
+        // POST api/AddNewLevel
+        [HttpPost("AddNewLevel")]
+        public async Task<IActionResult> CreateNewLevelAsync([FromBody] AddLevelDTO dto)
         {
-            var exists = await _unitOfWork.LevelRepository.GetFirstAsync(a => a.Id == id);
-            if (exists is not null)
-            {
-                await _unitOfWork.LevelRepository.DeleteAsync(exists);
-                await _unitOfWork.Complete();
-
-                return Ok(exists);
-            }
+            var result = await _levelService.AddNewLevelAsync(dto);
+            if (result.IsSuccess)
+                return Ok(result);
             else
-            {
-                return NotFound("Not found Level with ID: " + id);
-            }
+                return BadRequest(result);
+        }
+
+        // POST api/Levels/Update/5
+        [HttpPost("Update/{id}")]
+        public async Task<IActionResult> UpdateLevel(int id, [FromBody] UpdateLevelDTO dto)
+        {
+            var result = await _levelService.UpdateLevelByIdAsync(id, dto);
+            if (result.IsSuccess)
+                return Ok(result);
+            else
+                return BadRequest(result);
+        }
+
+        // POST api/Levels/Delete
+        [HttpPost("Delete")]
+        public async Task<IActionResult> DeleteAsync(DeleteLevelDTO dto)
+        {
+            var result = await _levelService.RemoveLevelByIdAsync(dto);
+            if (result.IsSuccess)
+                return Ok(result);
+            else
+                return NotFound(result);
         }
     }
 }

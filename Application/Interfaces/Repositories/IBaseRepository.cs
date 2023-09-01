@@ -17,10 +17,10 @@ namespace Application.Interfaces.Repositories
             Expression<Func<T, object>>? orderBy, 
             string orderByDirection = "ASC"
         );
-        Task<T> AddAsync(T entity);
-        Task Update(T entity);
-        Task DeleteAsync(T entity);
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<T, bool>> criteria);
+        Task<T> AddAsync(T entity);
+        T Update(T entity);
+        Task Delete(T entity);
     }
 }

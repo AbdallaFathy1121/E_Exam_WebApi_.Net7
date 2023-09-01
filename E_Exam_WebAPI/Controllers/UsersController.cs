@@ -1,5 +1,7 @@
-﻿using Application.DTOs.User;
+﻿using Application.DTOs;
+using Application.DTOs.User;
 using Application.Interfaces.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Exam_WebAPI.Controllers
@@ -15,41 +17,49 @@ namespace E_Exam_WebAPI.Controllers
         }
 
 
-        // GET: api/<UsersController>
+        // GET: api/Users
+        [Authorize]
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<IActionResult> GetAllUsersAsync()
         {
-            return new string[] { "value1", "value2" };
+            var result = await _userService.GetAllUsersAsync();
+            if (result.IsSuccess)
+                return Ok(result);
+            return BadRequest(result);
         }
 
-        // GET api/<UsersController>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
-        }
-
-        // POST api/<UsersController>
+        // POST api/Register
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterDTO dto)
         {
-            var result = await _userService.CreateNewUser(dto);
+            var result = await _userService.RegisterAsync(dto);
             if (result.IsSuccess)
                 return Ok(result);
             else
                 return BadRequest(result);
         }
 
-        // PUT api/<UsersController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
+        // POST api/Login
+        [HttpPost("Login")]
+        public async Task<IActionResult> LoginAsync([FromBody] LoginDTO dto)
         {
+            var result = await _userService.LoginAsync(dto);
+            if (result.IsSuccess)
+                return Ok(result);
+            else 
+                return BadRequest(result);
         }
 
-        // DELETE api/<UsersController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
+        // POST api/DeleteUser
+        [Authorize]
+        [HttpPost("DeleteUser")]
+        public async Task<IActionResult> DeleteUserAsync([FromBody]DeleteUserDTO dto)
         {
+            var result = await _userService.DeleteUserByIdAsync(dto);
+            if (result.IsSuccess)
+                return Ok(result);
+            else
+                return BadRequest(result);
         }
     }
 }

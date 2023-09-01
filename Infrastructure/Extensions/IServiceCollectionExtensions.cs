@@ -38,6 +38,20 @@ namespace Infrastructure.Extensions
             services
                 .AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork))
                 .AddTransient(typeof(IUserService), typeof(UserService))
+                .AddTransient(typeof(ILevelService), typeof(LevelService))
+                .Configure<IdentityOptions>(options =>
+                {
+                    options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                    options.Lockout.MaxFailedAccessAttempts = 3;
+                    options.Password.RequireNonAlphanumeric = false;
+                    options.Password.RequireUppercase = true;
+                    options.Password.RequireLowercase = true;
+                    options.Password.RequireDigit = true;
+                    options.Password.RequiredLength = 8;
+                    options.User.RequireUniqueEmail = true;
+                })
+
+                .AddSingleton<IJWTManagerRepository, JWTManagerRepository>()
                 .AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
         }
 
