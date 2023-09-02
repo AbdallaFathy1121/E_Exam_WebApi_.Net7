@@ -53,7 +53,7 @@ namespace E_Exam_WebAPI.Controllers
 
         // POST api/Levels/Update/5
         [HttpPost("Update/{id}")]
-        public async Task<IActionResult> UpdateLevel(int id, [FromBody] UpdateLevelDTO dto)
+        public async Task<IActionResult> UpdateLevelAsync(int id, [FromBody] UpdateLevelDTO dto)
         {
             var result = await _levelService.UpdateLevelByIdAsync(id, dto);
             if (result.IsSuccess)
@@ -64,7 +64,7 @@ namespace E_Exam_WebAPI.Controllers
 
         // POST api/Levels/Delete
         [HttpPost("Delete")]
-        public async Task<IActionResult> DeleteAsync(DeleteLevelDTO dto)
+        public async Task<IActionResult> DeleteLevelAsync(DeleteLevelDTO dto)
         {
             var result = await _levelService.RemoveLevelByIdAsync(dto);
             if (result.IsSuccess)

@@ -22,7 +22,7 @@ namespace Infrastructure.Repositories
 
         public async Task<IEnumerable<T>> GetAllAsync()
         {
-            return await _context.Set<T>().AsNoTracking().ToListAsync();
+            return await _context.Set<T>().ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetWhereAsync(
@@ -30,7 +30,7 @@ namespace Infrastructure.Repositories
             Expression<Func<T, object>>? orderBy, 
             string orderByDirection = "ASC")
         {
-            IQueryable<T> query = _context.Set<T>().AsNoTracking().Where(match);
+            IQueryable<T> query = _context.Set<T>().Where(match);
 
             if (orderBy is not null)
             {
@@ -45,18 +45,18 @@ namespace Infrastructure.Repositories
 
         public async Task<T> GetFirstAsync(Expression<Func<T, bool>> match)
         {
-            var result = await _context.Set<T>().AsNoTracking().FirstOrDefaultAsync(match);
+            var result = await _context.Set<T>().FirstOrDefaultAsync(match);
             return result;
         }
 
         public async Task<int> CountAsync(Expression<Func<T, bool>> criteria)
         {
-            return await _context.Set<T>().AsNoTracking().AsQueryable().CountAsync(criteria);
+            return await _context.Set<T>().AsQueryable().CountAsync(criteria);
         }
         
         public async Task<int> CountAsync()
         {
-            return await _context.Set<T>().AsNoTracking().AsQueryable().CountAsync();
+            return await _context.Set<T>().AsQueryable().CountAsync();
         }
         
         public async Task<T> AddAsync(T entity)

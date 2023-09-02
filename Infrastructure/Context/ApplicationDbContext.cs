@@ -18,10 +18,6 @@ namespace Infrastructure.Context
 
 
         public DbSet<Level> Levels { get; set; }
-
-        internal Task FindAsync<T>(Expression<Func<T, bool>> match) where T : class
-        {
-            throw new NotImplementedException();
-        }
+        public DbSet<Subject> Subjects { get; set; }
     }
 }

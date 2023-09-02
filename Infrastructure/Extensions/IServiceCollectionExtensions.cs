@@ -29,7 +29,7 @@ namespace Infrastructure.Extensions
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseSqlServer(connectionString,
+               options.UseLazyLoadingProxies().UseSqlServer(connectionString,
                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 
@@ -39,6 +39,7 @@ namespace Infrastructure.Extensions
                 .AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork))
                 .AddTransient(typeof(IUserService), typeof(UserService))
                 .AddTransient(typeof(ILevelService), typeof(LevelService))
+                .AddTransient(typeof(ISubjectService), typeof(SubjectService))
                 .Configure<IdentityOptions>(options =>
                 {
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);

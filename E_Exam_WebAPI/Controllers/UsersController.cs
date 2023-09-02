@@ -18,7 +18,6 @@ namespace E_Exam_WebAPI.Controllers
 
 
         // GET: api/Users
-        [Authorize]
         [HttpGet]
         public async Task<IActionResult> GetAllUsersAsync()
         {
@@ -51,7 +50,6 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/DeleteUser
-        [Authorize]
         [HttpPost("DeleteUser")]
         public async Task<IActionResult> DeleteUserAsync([FromBody]DeleteUserDTO dto)
         {

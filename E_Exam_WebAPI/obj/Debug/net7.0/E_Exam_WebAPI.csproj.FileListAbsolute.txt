@@ -88,3 +88,5 @@ E:\Asp.net Projects\E_Exam_WebApi\E_Exam_WebAPI\bin\Debug\net7.0\Microsoft.AspNe
 E:\Asp.net Projects\E_Exam_WebApi\E_Exam_WebAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Core.dll
 E:\Asp.net Projects\E_Exam_WebApi\E_Exam_WebAPI\bin\Debug\net7.0\Microsoft.Extensions.Identity.Stores.dll
 E:\Asp.net Projects\E_Exam_WebApi\E_Exam_WebAPI\bin\Debug\net7.0\Microsoft.Extensions.Options.dll
+E:\Asp.net Projects\E_Exam_WebApi\E_Exam_WebAPI\bin\Debug\net7.0\Castle.Core.dll
+E:\Asp.net Projects\E_Exam_WebApi\E_Exam_WebAPI\bin\Debug\net7.0\Microsoft.EntityFrameworkCore.Proxies.dll
