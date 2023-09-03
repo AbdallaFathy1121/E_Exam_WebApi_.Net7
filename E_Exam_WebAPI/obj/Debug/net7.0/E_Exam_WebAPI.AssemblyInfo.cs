@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("E_Exam_WebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+296ddf1f3173ae6d07ce8dc9abe05f50450d444a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+3174c0fc41110f22d0f2b19bd54c483ee84d1a72")]
 [assembly: System.Reflection.AssemblyProductAttribute("E_Exam_WebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("E_Exam_WebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

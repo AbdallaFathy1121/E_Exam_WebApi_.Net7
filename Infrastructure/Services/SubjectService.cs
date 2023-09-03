@@ -29,10 +29,10 @@ namespace Infrastructure.Services
             MainResponse response = new MainResponse();
             try
             {
-                var getSubjects = await _unitOfWork.SubjectRepository.GetAllAsync();
-
+                var subjects = await _unitOfWork.SubjectRepository.GetAllSubjectsAsync();
+                
                 response.IsSuccess = true;
-                response.Data = getSubjects;
+                response.Data = subjects;
                 return response;
             }
             catch (Exception ex)
@@ -47,7 +47,7 @@ namespace Infrastructure.Services
             MainResponse response = new MainResponse();
             try
             {
-                var subject = await _unitOfWork.SubjectRepository.GetFirstAsync(a=>a.Id == id);
+                var subject = await _unitOfWork.SubjectRepository.GetSubjectByIdAsync(id);
 
                 response.IsSuccess = true;
                 response.Data = subject;
@@ -84,7 +84,7 @@ namespace Infrastructure.Services
 
                         response.IsSuccess = true;
                         response.Messages.Add("Add New Subject Successfully!");
-                        response.Data = result;
+                        response.Data = dto;
                     }
                     else
                     {
@@ -131,6 +131,7 @@ namespace Infrastructure.Services
 
                         response.IsSuccess = true;
                         response.Messages.Add("Update Subject Successfully!");
+                        response.Data = dto;
                     }
                     else
                     {

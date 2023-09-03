@@ -29,8 +29,8 @@ namespace Infrastructure.Extensions
             var connectionString = configuration.GetConnectionString("DefaultConnection");
 
             services.AddDbContext<ApplicationDbContext>(options =>
-               options.UseLazyLoadingProxies().UseSqlServer(connectionString,
-                   builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                options.UseSqlServer(connectionString,
+                    builder => builder.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
         }
 
         private static void AddRepositories(this IServiceCollection services)
@@ -40,6 +40,7 @@ namespace Infrastructure.Extensions
                 .AddTransient(typeof(IUserService), typeof(UserService))
                 .AddTransient(typeof(ILevelService), typeof(LevelService))
                 .AddTransient(typeof(ISubjectService), typeof(SubjectService))
+                .AddTransient(typeof(ISubjectLevelService), typeof(SubjectLevelService))
                 .Configure<IdentityOptions>(options =>
                 {
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);

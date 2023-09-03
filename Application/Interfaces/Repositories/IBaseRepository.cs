@@ -10,12 +10,13 @@ namespace Application.Interfaces.Repositories
 {
     public interface IBaseRepository<T> where T : class
     {
-        Task<IEnumerable<T>> GetAllAsync();
-        Task<T> GetFirstAsync(Expression<Func<T, bool>> match);
+        Task<IEnumerable<T>> GetAllAsync(string[]? includes = null);
+        Task<T> GetFirstAsync(Expression<Func<T, bool>> match, string[]? includes = null);
         Task<IEnumerable<T>> GetWhereAsync(
             Expression<Func<T, bool>> match, 
             Expression<Func<T, object>>? orderBy, 
-            string orderByDirection = "ASC"
+            string[]? includes = null,
+            string orderByDirection = OrderBy.Ascending
         );
         Task<int> CountAsync();
         Task<int> CountAsync(Expression<Func<T, bool>> criteria);

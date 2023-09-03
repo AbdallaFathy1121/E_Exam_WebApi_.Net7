@@ -20,17 +20,29 @@ namespace Infrastructure.Repositories
         }
 
 
-        public async Task<IEnumerable<T>> GetAllAsync()
+        private IQueryable<T> GetDataWithIncludes(string[] includes)
         {
-            return await _context.Set<T>().ToListAsync();
+            IQueryable<T> query = _context.Set<T>().AsNoTracking();
+
+            if (includes is not null)
+                foreach (var item in includes)
+                    query = query.Include(item);
+
+            return query;
+        }
+
+        public async Task<IEnumerable<T>> GetAllAsync(string[]? includes = null)
+        {
+            return await GetDataWithIncludes(includes).ToListAsync();
         }
 
         public async Task<IEnumerable<T>> GetWhereAsync(
-            Expression<Func<T, bool>> match, 
-            Expression<Func<T, object>>? orderBy, 
-            string orderByDirection = "ASC")
-        {
-            IQueryable<T> query = _context.Set<T>().Where(match);
+            Expression<Func<T, bool>> match,
+            Expression<Func<T, object>>? orderBy,
+            string[]? includes = null,
+            string orderByDirection = OrderBy.Ascending)
+        { 
+            IQueryable<T> query = GetDataWithIncludes(includes).Where(match);
 
             if (orderBy is not null)
             {
@@ -43,9 +55,9 @@ namespace Infrastructure.Repositories
             return await query.ToListAsync();
         }
 
-        public async Task<T> GetFirstAsync(Expression<Func<T, bool>> match)
+        public async Task<T> GetFirstAsync(Expression<Func<T, bool>> match, string[]? includes = null)
         {
-            var result = await _context.Set<T>().FirstOrDefaultAsync(match);
+            var result = await GetDataWithIncludes(includes).FirstOrDefaultAsync(match);
             return result;
         }
 

@@ -14,14 +14,16 @@ namespace Infrastructure.Repositories
         private readonly ApplicationDbContext _context;
 
         // Repositories
-        public IBaseRepository<Level> LevelRepository { get; private set; }
-        public IBaseRepository<Subject> SubjectRepository { get; private set; }
+        public ILevelRepository LevelRepository { get; private set; }
+        public ISubjectRepository SubjectRepository { get; private set; }
+        public ISubjectLevelRepository SubjectLevelRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            LevelRepository = new BaseRepository<Level>(context);
-            SubjectRepository = new BaseRepository<Subject>(context);
+            LevelRepository = new LevelRepository(context);
+            SubjectRepository = new SubjectRepository(context);
+            SubjectLevelRepository = new SubjectLevelRepository(context);
         }
 
         public async Task<int> Complete()

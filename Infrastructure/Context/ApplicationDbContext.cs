@@ -19,5 +19,6 @@ namespace Infrastructure.Context
 
         public DbSet<Level> Levels { get; set; }
         public DbSet<Subject> Subjects { get; set; }
+        public DbSet<SubjectLevel> SubjectLevels { get; set; }
     }
 }

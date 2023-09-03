@@ -9,8 +9,9 @@ namespace Application.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        IBaseRepository<Level> LevelRepository { get; }
-        IBaseRepository<Subject> SubjectRepository { get; }
+        ILevelRepository LevelRepository { get; }
+        ISubjectRepository SubjectRepository { get; }
+        ISubjectLevelRepository SubjectLevelRepository { get; }
 
 
         Task<int> Complete();
