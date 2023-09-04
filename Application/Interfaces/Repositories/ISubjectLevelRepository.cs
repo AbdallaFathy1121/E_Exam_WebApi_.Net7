@@ -10,6 +10,7 @@ namespace Application.Interfaces.Repositories
 {
     public interface ISubjectLevelRepository: IBaseRepository<SubjectLevel>
     {
-        Task<SubjectLevelDTO> GetAllSubjectLevelsAsync();
+        Task<IEnumerable<SubjectLevelDTO>> GetAllSubjectLevelsAsync();
+
     }
 }

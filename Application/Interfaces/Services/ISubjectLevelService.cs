@@ -1,4 +1,5 @@
 ﻿using Application.DTOs;
+using Application.DTOs.SubjectLevel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,8 +11,9 @@ namespace Application.Interfaces.Services
     public interface ISubjectLevelService
     {
         Task<MainResponse> GetAllSubjectLevelsAsync();
-        Task<MainResponse> GetSubjectLevelsByIdAsync(int id);
-        Task<MainResponse> GetSubjectLevelsByLevelNameAsync(string levelName);
-        Task<MainResponse> GetSubjectLevelsBySubjectNameAsync(string subjectName);
+        Task<MainResponse> GetSubjectLevelByIdAsync(int id);
+        Task<MainResponse> GetSubjectLevelsByLevelIdAsync(int LevelId);
+        Task<MainResponse> GetSubjectLevelsBySubjectIdAsync(int subjectId);
+        Task<MainResponse> AddSubjectLevelAsync(AddSubjectLevelDTO dto);
     }
 }
