@@ -15,5 +15,7 @@ namespace Application.Interfaces.Services
         Task<MainResponse> GetSubjectLevelsByLevelIdAsync(int LevelId);
         Task<MainResponse> GetSubjectLevelsBySubjectIdAsync(int subjectId);
         Task<MainResponse> AddSubjectLevelAsync(AddSubjectLevelDTO dto);
+        Task<MainResponse> UpdateSubjectLevelAsync(int id, UpdateSubjectLevelDTO dto);
+        Task<MainResponse> RemoveSubjectLevelAsync(int id);
     }
 }

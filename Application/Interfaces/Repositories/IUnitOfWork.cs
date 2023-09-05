@@ -12,6 +12,7 @@ namespace Application.Interfaces.Repositories
         ILevelRepository LevelRepository { get; }
         ISubjectRepository SubjectRepository { get; }
         ISubjectLevelRepository SubjectLevelRepository { get; }
+        IExamRepository ExamRepository { get; }
 
 
         Task<int> Complete();

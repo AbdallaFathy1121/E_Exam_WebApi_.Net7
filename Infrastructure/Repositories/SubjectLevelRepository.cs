@@ -30,7 +30,43 @@ namespace Infrastructure.Repositories
                 {
                     Id = a.Id,
                     Level = new { a.Level!.Id, a.Level!.LevelName },
-                    Subject = new {a.Subject!.Id, a.Subject!.Name }
+                    Subject = new { a.Subject!.Id, a.Subject!.Name, a.Subject!.TeacherId }
+                })
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<SubjectLevelDTO>> GetSubjectLevelsByLevelIdAsync(int levelId)
+        {
+            var result = await _context.SubjectLevels
+                .AsNoTracking()
+                .Include(a => a.Level)
+                .Include(a => a.Subject)
+                .Where(a => a.LevelId == levelId)
+                .Select(a => new SubjectLevelDTO
+                {
+                    Id = a.Id,
+                    Level = new { a.Level!.Id, a.Level!.LevelName },
+                    Subject = new { a.Subject!.Id, a.Subject!.Name, a.Subject!.TeacherId }
+                })
+                .ToListAsync();
+
+            return result;
+        }
+
+        public async Task<IEnumerable<SubjectLevelDTO>> GetSubjectLevelsBySubjectIdAsync(int subjectId)
+        {
+            var result = await _context.SubjectLevels
+                .AsNoTracking()
+                .Include(a => a.Level)
+                .Include(a => a.Subject)
+                .Where(a => a.SubjectId == subjectId)
+                .Select(a => new SubjectLevelDTO
+                {
+                    Id = a.Id,
+                    Level = new { a.Level!.Id, a.Level!.LevelName },
+                    Subject = new { a.Subject!.Id, a.Subject!.Name, a.Subject!.TeacherId }
                 })
                 .ToListAsync();
 

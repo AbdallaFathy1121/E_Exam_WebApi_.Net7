@@ -38,10 +38,9 @@ namespace E_Exam_WebAPI.Controllers
                 return BadRequest(result);
         }
 
-
         // GET api/SubjectLevels/Level/5
         [HttpGet("Level/{levelId}")]
-        public async Task<IActionResult> GetSubjectLevelByLevelId(int levelId)
+        public async Task<IActionResult> GetSubjectLevelsByLevelId(int levelId)
         {
             var result = await _subjectLevelService.GetSubjectLevelsByLevelIdAsync(levelId);
             if (result.IsSuccess)
@@ -52,7 +51,7 @@ namespace E_Exam_WebAPI.Controllers
 
         // GET api/SubjectLevels/Subject/5
         [HttpGet("Subject/{subjectId}")]
-        public async Task<IActionResult> GetSubjectLevelBySubjectId(int subjectId)
+        public async Task<IActionResult> GetSubjectLevelsBySubjectId(int subjectId)
         {
             var result = await _subjectLevelService.GetSubjectLevelsBySubjectIdAsync(subjectId);
             if (result.IsSuccess)
@@ -61,11 +60,33 @@ namespace E_Exam_WebAPI.Controllers
                 return BadRequest(result);
         }
 
-        // POST api/SubjectLevels
-        [HttpPost]
+        // POST api/SubjectLevels/Add
+        [HttpPost("Add")]
         public async Task<IActionResult> AddNewSubjectLevelAsync([FromBody] AddSubjectLevelDTO dto)
         {
             var result = await _subjectLevelService.AddSubjectLevelAsync(dto);
+            if (result.IsSuccess)
+                return Ok(result);
+            else
+                return BadRequest(result);
+        }
+
+        // POST api/SubjectLevels/Update/5
+        [HttpPost("Update/{id}")]
+        public async Task<IActionResult> UpdateSubjectLevelAsync(int id, [FromBody] UpdateSubjectLevelDTO dto)
+        {
+            var result = await _subjectLevelService.UpdateSubjectLevelAsync(id, dto);
+            if (result.IsSuccess)
+                return Ok(result);
+            else
+                return BadRequest(result);
+        }
+
+        // POST api/SubjectLevels/Delete
+        [HttpPost("Delete")]
+        public async Task<IActionResult> DeleteSubjectLevelByIdAsync([FromBody] int id)
+        {
+            var result = await _subjectLevelService.RemoveSubjectLevelAsync(id);
             if (result.IsSuccess)
                 return Ok(result);
             else
