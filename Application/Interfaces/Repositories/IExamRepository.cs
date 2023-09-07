@@ -1,4 +1,5 @@
-﻿using Domain.Entities;
+﻿using Application.DTOs.Exam;
+using Domain.Entities;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,5 +10,7 @@ namespace Application.Interfaces.Repositories
 {
     public interface IExamRepository: IBaseRepository<Exam>
     {
+        Task<IEnumerable<ExamDTO>> GetAllExamsAsync();
+        Task<ExamDTO> GetExamByIdAsync(int id);
     }
 }

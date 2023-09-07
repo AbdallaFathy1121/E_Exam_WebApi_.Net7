@@ -10,8 +10,8 @@ namespace Domain.Entities
     {
         public int Id { get; set; }
         public string ExamName { get; set; }
-        public DateTime? StartDateTime { get; set; } = DateTime.Now;
-        public DateTime? EndDateTime { get; set; } = DateTime.Now.AddHours(1);
+        public DateTime StartDateTime { get; set; } = DateTime.Now;
+        public DateTime EndDateTime { get; set; } = DateTime.Now.AddHours(1);
         public int SubjectLevelId { get; set; }
         public string UserId { get; set; }
 

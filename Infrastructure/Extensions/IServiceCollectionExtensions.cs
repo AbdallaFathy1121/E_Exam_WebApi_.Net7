@@ -41,6 +41,7 @@ namespace Infrastructure.Extensions
                 .AddTransient(typeof(ILevelService), typeof(LevelService))
                 .AddTransient(typeof(ISubjectService), typeof(SubjectService))
                 .AddTransient(typeof(ISubjectLevelService), typeof(SubjectLevelService))
+                .AddTransient(typeof(IExamService), typeof(ExamService))
                 .Configure<IdentityOptions>(options =>
                 {
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
