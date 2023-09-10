@@ -27,7 +27,7 @@ namespace E_Exam_WebAPI.Controllers
             return BadRequest(result);
         }
 
-        // POST api/Register
+        // POST api/Users/Register
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterDTO dto)
         {
@@ -38,7 +38,7 @@ namespace E_Exam_WebAPI.Controllers
                 return BadRequest(result);
         }
 
-        // POST api/Login
+        // POST api/Users/Login
         [HttpPost("Login")]
         public async Task<IActionResult> LoginAsync([FromBody] LoginDTO dto)
         {
@@ -49,8 +49,8 @@ namespace E_Exam_WebAPI.Controllers
                 return BadRequest(result);
         }
 
-        // POST api/DeleteUser
-        [HttpPost("DeleteUser")]
+        // POST api/Users/Delete
+        [HttpPost("Delete")]
         public async Task<IActionResult> DeleteUserAsync([FromBody]DeleteUserDTO dto)
         {
             var result = await _userService.DeleteUserByIdAsync(dto);

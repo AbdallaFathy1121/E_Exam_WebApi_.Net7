@@ -71,8 +71,8 @@ namespace E_Exam_WebAPI.Controllers
                 return BadRequest(result);
         }
 
-        // POST api/SubjectLevels/Update/5
-        [HttpPost("Update/{id}")]
+        // POST api/SubjectLevels/5/Update
+        [HttpPost("{id}/Update")]
         public async Task<IActionResult> UpdateSubjectLevelAsync(int id, [FromBody] UpdateSubjectLevelDTO dto)
         {
             var result = await _subjectLevelService.UpdateSubjectLevelAsync(id, dto);

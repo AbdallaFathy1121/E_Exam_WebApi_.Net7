@@ -19,5 +19,6 @@ namespace Domain.Entities
         // Relations
         public virtual SubjectLevel? SubjectLevel { get; set; }
         public virtual User? User { get; set; }
+        public virtual ICollection<Question>? Questions { get; set; } = new HashSet<Question>();
     }
 }

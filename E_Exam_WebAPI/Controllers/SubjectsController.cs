@@ -37,8 +37,8 @@ namespace E_Exam_WebAPI.Controllers
                 return BadRequest(result);
         }
 
-        // POST api/AddNewSubject
-        [HttpPost("AddNewSubject")]
+        // POST api/Subjects/Add
+        [HttpPost("Add")]
         public async Task<IActionResult> AddNewSubjectAsync([FromBody] AddSubjectDTO dto)
         {
             var result = await _subjectService.AddNewSubjectAsync(dto);
@@ -48,8 +48,8 @@ namespace E_Exam_WebAPI.Controllers
                 return BadRequest(result);
         }
 
-        // POST api/Subjects/Update/5
-        [HttpPost("Update/{id}")]
+        // POST api/Subjects/5/Update
+        [HttpPost("{id}/Update")]
         public async Task<IActionResult> UpdateSubjectAsync(int id, [FromBody] UpdateSubjectDTO dto)
         {
             var result = await _subjectService.UpdateSubjectByIdAsync(id, dto);

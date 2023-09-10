@@ -18,6 +18,7 @@ namespace Infrastructure.Repositories
         public ISubjectRepository SubjectRepository { get; private set; }
         public ISubjectLevelRepository SubjectLevelRepository { get; private set; }
         public IExamRepository ExamRepository { get; private set; }
+        public IQuestionRepository QuestionRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
@@ -26,6 +27,7 @@ namespace Infrastructure.Repositories
             SubjectRepository = new SubjectRepository(context);
             SubjectLevelRepository = new SubjectLevelRepository(context);
             ExamRepository = new ExamRepository(context);
+            QuestionRepository = new QuestionRepository(context);
         }
 
         public async Task<int> Complete()

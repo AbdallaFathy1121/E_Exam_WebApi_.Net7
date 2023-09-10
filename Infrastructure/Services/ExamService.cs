@@ -4,23 +4,15 @@ using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Constants;
 using Domain.Entities;
-using Microsoft.AspNetCore.Identity;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
     public class ExamService : IExamService
     {
         private readonly IUnitOfWork _unitOfWork;
-        private UserManager<User> _userManager;
-        public ExamService(IUnitOfWork unitOfWork, UserManager<User> userManager)
+        public ExamService(IUnitOfWork unitOfWork)
         {
             _unitOfWork = unitOfWork;
-            _userManager = userManager;
         }
 
 
@@ -47,24 +39,17 @@ namespace Infrastructure.Services
             MainResponse response = new MainResponse();
             try
             {
-                var subjectLevel = await _unitOfWork.SubjectLevelRepository.GetFirstAsync(a => a.Id == dto.SubjectLevelId);
+                var subjectLevel = await _unitOfWork.SubjectLevelRepository.GetFirstAsync(a => a.Id == dto.SubjectLevelId, new[] { "Subject" });
                 if (subjectLevel is null)
                 {
                     response.Messages.Add("Invalid SubjectLevel ID");
                     return response;
                 }
 
-                var user = await _userManager.FindByIdAsync(dto.TeacherId);
-                if (user is null)
+                var getUserIdFromSubject = subjectLevel.Subject!.TeacherId;
+                if (getUserIdFromSubject != dto.TeacherId)
                 {
                     response.Messages.Add("Invalid User ID");
-                    return response;
-                }
-
-                bool isTeacher = await _userManager.IsInRoleAsync(user, Roles.Teacher);
-                if (!isTeacher)
-                {
-                    response.Messages.Add("User is not a Teacher");
                     return response;
                 }
 
@@ -127,24 +112,17 @@ namespace Infrastructure.Services
                     return response;
                 }
 
-                var subjectLevel = await _unitOfWork.SubjectLevelRepository.GetFirstAsync(a => a.Id == dto.SubjectLevelId);
+                var subjectLevel = await _unitOfWork.SubjectLevelRepository.GetFirstAsync(a => a.Id == dto.SubjectLevelId, new[] { "Subject" });
                 if (subjectLevel is null)
                 {
                     response.Messages.Add("Invalid SubjectLevel ID");
                     return response;
                 }
 
-                var user = await _userManager.FindByIdAsync(dto.TeacherId);
-                if (user is null)
+                var getUserIdFromSubject = subjectLevel.Subject!.TeacherId;
+                if (getUserIdFromSubject != dto.TeacherId)
                 {
                     response.Messages.Add("Invalid User ID");
-                    return response;
-                }
-
-                bool isTeacher = await _userManager.IsInRoleAsync(user, Roles.Teacher);
-                if (!isTeacher)
-                {
-                    response.Messages.Add("User is not a Teacher");
                     return response;
                 }
 
