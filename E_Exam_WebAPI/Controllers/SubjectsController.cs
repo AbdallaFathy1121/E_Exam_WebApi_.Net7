@@ -1,11 +1,14 @@
 ﻿using Application.DTOs.Subject;
 using Application.Interfaces.Services;
+using Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Exam_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class SubjectsController : ControllerBase
     {
         private readonly ISubjectService _subjectService;
@@ -38,6 +41,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Subjects/Add
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost("Add")]
         public async Task<IActionResult> AddNewSubjectAsync([FromBody] AddSubjectDTO dto)
         {
@@ -49,6 +53,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Subjects/5/Update
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost("{id}/Update")]
         public async Task<IActionResult> UpdateSubjectAsync(int id, [FromBody] UpdateSubjectDTO dto)
         {
@@ -60,6 +65,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Subjects/Delete
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost("Delete")]
         public async Task<IActionResult> DeleteSubjectAsync(DeleteSubjectDTO dto)
         {

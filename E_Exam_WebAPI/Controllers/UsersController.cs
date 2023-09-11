@@ -1,6 +1,7 @@
 ﻿using Application.DTOs;
 using Application.DTOs.User;
 using Application.Interfaces.Services;
+using Domain.Constants;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,6 +19,7 @@ namespace E_Exam_WebAPI.Controllers
 
 
         // GET: api/Users
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAllUsersAsync()
         {
@@ -50,6 +52,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Users/Delete
+        [Authorize(Roles = Roles.Admin)]
         [HttpPost("Delete")]
         public async Task<IActionResult> DeleteUserAsync([FromBody]DeleteUserDTO dto)
         {

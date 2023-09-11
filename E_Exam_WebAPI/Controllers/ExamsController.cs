@@ -1,12 +1,15 @@
 ﻿using Application.DTOs.Exam;
 using Application.DTOs.Question;
 using Application.Interfaces.Services;
+using Domain.Constants;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace E_Exam_WebAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ExamsController : ControllerBase
     {
         private readonly IExamService _examService;
@@ -19,6 +22,7 @@ namespace E_Exam_WebAPI.Controllers
 
 
         // GET: api/Exams
+        [Authorize(Roles = Roles.Admin)]
         [HttpGet]
         public async Task<IActionResult> GetAllExamsAsync()
         {
@@ -41,6 +45,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Exams/Add
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("Add")]
         public async Task<IActionResult> AddNewExamAsync([FromBody] AddExamDTO dto)
         {
@@ -52,6 +57,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Exams/5/Update
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("{id}/Update")]
         public async Task<IActionResult> UpdateExamAsync(int id, [FromBody] UpdateExamDTO dto)
         {
@@ -63,6 +69,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Exams/Delete
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("Delete")]
         public async Task<IActionResult> DeleteExamAsync([FromBody] int id)
         {
@@ -99,6 +106,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Exams/5/Questions/Add
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("{examId}/Questions/Add")]
         public async Task<IActionResult> AddNewQuestionAsync(int examId, [FromBody] AddQuestionDTO dto)
         {
@@ -110,6 +118,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Exams/5/Questions/5/Update
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("{examId}/Questions/{id}/Update")]
         public async Task<IActionResult> UpdateQuestionByIdAsync(int examId, int id,  [FromBody] UpdateQuestionDTO dto)
         {
@@ -121,6 +130,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Exams/5/Questions/Delete
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("{examId}/Questions/Delete")]
         public async Task<IActionResult> RemoveQuestionByIdAsync(int examId, [FromBody] int id)
         {
