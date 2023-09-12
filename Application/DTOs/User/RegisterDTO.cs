@@ -9,6 +9,10 @@ namespace Application.DTOs.User
 {
     public record RegisterDTO
     (
+        [Required(ErrorMessage = "Name is Required")]
+        [MinLength(10, ErrorMessage ="Please Enter Full Name")] 
+        string Name,
+
         [Required(ErrorMessage = "Email is Required")]
         [EmailAddress(ErrorMessage = "Invalid Email")]
         string Email,

@@ -28,6 +28,7 @@ namespace Infrastructure.Repositories
                 {
                     Id = a.Id,
                     SubjectName = a.Name,
+                    Image = a.Image,
                     Teacher = new
                     {
                         a.Teacher!.Id,
@@ -48,6 +49,7 @@ namespace Infrastructure.Repositories
                 {
                     Id = a.Id,
                     SubjectName = a.Name,
+                    Image = a.Image,
                     Teacher = new
                     {
                         a.Teacher!.Id,

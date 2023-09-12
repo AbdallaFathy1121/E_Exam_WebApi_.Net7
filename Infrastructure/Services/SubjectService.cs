@@ -73,10 +73,14 @@ namespace Infrastructure.Services
                     bool isInRoleTeacher = await _userManager.IsInRoleAsync(findUserById, Roles.Teacher);
                     if (isInRoleTeacher)
                     {
+                        using var stream = new MemoryStream();
+                        await dto.Image.CopyToAsync(stream);
+
                         Subject subject = new Subject
                         {
                             Name = dto.Name,
-                            TeacherId = dto.TeacherId
+                            TeacherId = dto.TeacherId,
+                            Image = stream.ToArray()
                         };
 
                         var result = await _unitOfWork.SubjectRepository.AddAsync(subject);
@@ -123,8 +127,12 @@ namespace Infrastructure.Services
                     bool isInRoleTeacher = await _userManager.IsInRoleAsync(findUserById, Roles.Teacher);
                     if (isInRoleTeacher)
                     {
+                        using var stream = new MemoryStream();
+                        await dto.Image.CopyToAsync(stream);
+
                         subject.TeacherId = dto.TeacherId;
                         subject.Name = dto.Name;
+                        subject.Image = stream.ToArray();
 
                         var result = _unitOfWork.SubjectRepository.Update(subject);
                         await _unitOfWork.Complete();

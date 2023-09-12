@@ -39,7 +39,7 @@ namespace Infrastructure.Services
             try
             {
                 var users = await _userManager.Users
-                    .Select(a=> new UserDTO(a.Id, a.Email!))
+                    .Select(a=> new UserDTO(a.Id, a.Email!, a.Name, a.IsTeacher))
                     .ToListAsync();
 
                 response.IsSuccess = true;
@@ -72,6 +72,7 @@ namespace Infrastructure.Services
                     {
                         Email = dto.Email,
                         UserName = dto.Email,
+                        Name = dto.Name,
                         IsTeacher = dto.IsTeacher
                     };
                     

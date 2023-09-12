@@ -9,6 +9,8 @@ namespace Application.DTOs.User
     public record UserDTO
     (
         string Id,
-        string Email
+        string Email,
+        string Name,
+        bool IsTeacher
     );
 }
