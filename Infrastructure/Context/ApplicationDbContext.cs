@@ -17,10 +17,8 @@ namespace Infrastructure.Context
         }
 
 
-        public DbSet<Level> Levels { get; set; }
         public DbSet<Subject> Subjects { get; set; }
-        public DbSet<SubjectLevel> SubjectLevels { get; set; }
-        public DbSet<Exam> Exams { get; set; }
         public DbSet<Question> Questions { get; set; }
+        public DbSet<StudentDegree> StudentDegrees { get; set; }
     }
 }

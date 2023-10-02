@@ -1,6 +1,7 @@
 ﻿using Application.DTOs.User;
 using Application.Interfaces.Repositories;
 using Domain.Entities;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
@@ -15,22 +16,35 @@ namespace Infrastructure.Repositories
 {
     public class JWTManagerRepository : IJWTManagerRepository
     {
+        private readonly UserManager<User> _userManager;
         private readonly IConfiguration _configuration;
-        public JWTManagerRepository(IConfiguration configuration)
+        public JWTManagerRepository(IConfiguration configuration, UserManager<User> userManager)
         {
             _configuration = configuration;
+            _userManager = userManager;
         }
 
-        public GenerateToken Authenticate(User user)
+        public async Task<GenerateToken> AuthenticateAsync(User user)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var keyDetail = Encoding.UTF8.GetBytes(_configuration["JWT:Key"]!);
 
+
             var claims = new List<Claim>
             {
                 new Claim(ClaimTypes.Email, user.Email!),
-                new Claim(ClaimTypes.NameIdentifier, user.Id)
+                new Claim("userId", user.Id),
+                new Claim("fullName", user.Name),
             };
+
+            var roles = await _userManager.GetRolesAsync(user);
+            if (roles is not null)
+            {
+                for (int i = 0; i < roles.Count; i++)
+                {
+                    claims.Add(new Claim("roles", roles[i]));
+                }
+            }
 
             var tokenDescriptor = new SecurityTokenDescriptor
             {
@@ -44,6 +58,7 @@ namespace Infrastructure.Repositories
             var token = tokenHandler.CreateToken(tokenDescriptor);
             GenerateToken generateToken = new GenerateToken
             {
+                UserId = user.Id,
                 Token = tokenHandler.WriteToken(token),
                 TokenExpiration = tokenDescriptor.Expires
             };

@@ -14,20 +14,16 @@ namespace Infrastructure.Repositories
         private readonly ApplicationDbContext _context;
 
         // Repositories
-        public ILevelRepository LevelRepository { get; private set; }
         public ISubjectRepository SubjectRepository { get; private set; }
-        public ISubjectLevelRepository SubjectLevelRepository { get; private set; }
-        public IExamRepository ExamRepository { get; private set; }
         public IQuestionRepository QuestionRepository { get; private set; }
+        public IStudentDegreeRepository StudentDegreeRepository { get; private set; }
 
         public UnitOfWork(ApplicationDbContext context)
         {
             _context = context;
-            LevelRepository = new LevelRepository(context);
             SubjectRepository = new SubjectRepository(context);
-            SubjectLevelRepository = new SubjectLevelRepository(context);
-            ExamRepository = new ExamRepository(context);
             QuestionRepository = new QuestionRepository(context);
+            StudentDegreeRepository = new StudentDegreeRepository(context);
         }
 
         public async Task<int> Complete()

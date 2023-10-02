@@ -8,6 +8,6 @@ namespace Application.DTOs.Subject
 {
     public record DeleteSubjectDTO (
         int Id,
-        string TecherId
+        string TeacherId
     );
 }

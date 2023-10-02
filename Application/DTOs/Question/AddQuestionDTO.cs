@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 namespace Application.DTOs.Question
 {
     public record AddQuestionDTO (
-      int ExamId,
+      int SubjectId,
       string QuestionName,
       string A1,
       string A2,

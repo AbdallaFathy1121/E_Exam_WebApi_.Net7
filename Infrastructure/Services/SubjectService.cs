@@ -73,14 +73,11 @@ namespace Infrastructure.Services
                     bool isInRoleTeacher = await _userManager.IsInRoleAsync(findUserById, Roles.Teacher);
                     if (isInRoleTeacher)
                     {
-                        using var stream = new MemoryStream();
-                        await dto.Image.CopyToAsync(stream);
 
                         Subject subject = new Subject
                         {
                             Name = dto.Name,
-                            TeacherId = dto.TeacherId,
-                            Image = stream.ToArray()
+                            TeacherId = dto.TeacherId
                         };
 
                         var result = await _unitOfWork.SubjectRepository.AddAsync(subject);
@@ -88,7 +85,7 @@ namespace Infrastructure.Services
 
                         response.IsSuccess = true;
                         response.Messages.Add("Add New Subject Successfully!");
-                        response.Data = dto;
+                        response.Data = result.Id;
                     }
                     else
                     {
@@ -127,12 +124,8 @@ namespace Infrastructure.Services
                     bool isInRoleTeacher = await _userManager.IsInRoleAsync(findUserById, Roles.Teacher);
                     if (isInRoleTeacher)
                     {
-                        using var stream = new MemoryStream();
-                        await dto.Image.CopyToAsync(stream);
-
                         subject.TeacherId = dto.TeacherId;
                         subject.Name = dto.Name;
-                        subject.Image = stream.ToArray();
 
                         var result = _unitOfWork.SubjectRepository.Update(subject);
                         await _unitOfWork.Complete();
@@ -170,7 +163,7 @@ namespace Infrastructure.Services
             MainResponse response = new MainResponse();
             try
             {
-                var subject = await _unitOfWork.SubjectRepository.GetFirstAsync(a => a.Id == dto.Id && a.TeacherId == dto.TecherId);
+                var subject = await _unitOfWork.SubjectRepository.GetFirstAsync(a => a.Id == dto.Id && a.TeacherId == dto.TeacherId);
                 if (subject is not null)
                 {
                     await _unitOfWork.SubjectRepository.Delete(subject);

@@ -27,12 +27,12 @@ namespace Infrastructure.Repositories
                 .Select(a => new SubjectDTO
                 {
                     Id = a.Id,
-                    SubjectName = a.Name,
-                    Image = a.Image,
+                    Name = a.Name,
                     Teacher = new
                     {
                         a.Teacher!.Id,
-                        a.Teacher.Email
+                        a.Teacher.Email,
+                        a.Teacher.Name
                     }
                 })
                 .ToListAsync();
@@ -48,12 +48,12 @@ namespace Infrastructure.Repositories
                 .Select(a => new SubjectDTO
                 {
                     Id = a.Id,
-                    SubjectName = a.Name,
-                    Image = a.Image,
+                    Name = a.Name,
                     Teacher = new
                     {
                         a.Teacher!.Id,
-                        a.Teacher.Email
+                        a.Teacher.Email,
+                        a.Teacher.Name
                     }
                 })
                 .FirstOrDefaultAsync(a => a.Id == id);

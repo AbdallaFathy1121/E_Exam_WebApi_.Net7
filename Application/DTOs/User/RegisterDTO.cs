@@ -11,7 +11,7 @@ namespace Application.DTOs.User
     (
         [Required(ErrorMessage = "Name is Required")]
         [MinLength(10, ErrorMessage ="Please Enter Full Name")] 
-        string Name,
+        string FullName,
 
         [Required(ErrorMessage = "Email is Required")]
         [EmailAddress(ErrorMessage = "Invalid Email")]

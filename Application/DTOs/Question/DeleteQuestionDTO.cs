@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Application.DTOs.Level
+namespace Application.DTOs.Question
 {
-    public record DeleteLevelDTO (
+    public record DeleteQuestionDTO (
         int Id
     );
 }

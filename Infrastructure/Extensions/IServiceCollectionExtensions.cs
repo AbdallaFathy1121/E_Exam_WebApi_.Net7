@@ -38,11 +38,9 @@ namespace Infrastructure.Extensions
             services
                 .AddScoped(typeof(IUnitOfWork), typeof(UnitOfWork))
                 .AddTransient(typeof(IUserService), typeof(UserService))
-                .AddTransient(typeof(ILevelService), typeof(LevelService))
                 .AddTransient(typeof(ISubjectService), typeof(SubjectService))
-                .AddTransient(typeof(ISubjectLevelService), typeof(SubjectLevelService))
-                .AddTransient(typeof(IExamService), typeof(ExamService))
                 .AddTransient(typeof(IQuestionService), typeof(QuestionService))
+                .AddTransient(typeof(IStudentDegreeService), typeof(StudentDegreeService))
                 .Configure<IdentityOptions>(options =>
                 {
                     options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
@@ -55,7 +53,7 @@ namespace Infrastructure.Extensions
                     options.User.RequireUniqueEmail = true;
                 })
 
-                .AddSingleton<IJWTManagerRepository, JWTManagerRepository>()
+                .AddScoped<IJWTManagerRepository, JWTManagerRepository>()
                 .AddIdentity<User, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>();
         }
 

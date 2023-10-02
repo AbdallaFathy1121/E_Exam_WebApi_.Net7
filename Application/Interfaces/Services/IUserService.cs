@@ -14,5 +14,6 @@ namespace Application.Interfaces.Services
         Task<MainResponse> LoginAsync(LoginDTO dto);
         Task<MainResponse> GetAllUsersAsync();
         Task<MainResponse> DeleteUserByIdAsync(DeleteUserDTO dto);
+        Task<MainResponse> GetUserByIdAsync(string id);
     }
 }

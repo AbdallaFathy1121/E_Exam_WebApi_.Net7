@@ -9,11 +9,9 @@ namespace Application.Interfaces.Repositories
 {
     public interface IUnitOfWork : IDisposable
     {
-        ILevelRepository LevelRepository { get; }
         ISubjectRepository SubjectRepository { get; }
-        ISubjectLevelRepository SubjectLevelRepository { get; }
-        IExamRepository ExamRepository { get; }
         IQuestionRepository QuestionRepository { get; }
+        IStudentDegreeRepository StudentDegreeRepository { get; }
 
 
         Task<int> Complete();

@@ -25,7 +25,7 @@ namespace Infrastructure.Services
             MainResponse response = new MainResponse();
             try
             {
-                var exam = await _unitOfWork.ExamRepository.GetFirstAsync(a => a.Id == dto.ExamId);
+                var exam = await _unitOfWork.SubjectRepository.GetFirstAsync(a => a.Id == dto.SubjectId);
                 if (exam is null)
                 {
                     response.Messages.Add("Invalid Exam ID");
@@ -34,7 +34,7 @@ namespace Infrastructure.Services
 
                 Question question = new Question
                 {
-                    ExamId = dto.ExamId,
+                    SubjectId = dto.SubjectId,
                     QuestionName = dto.QuestionName,
                     A1 = dto.A1,
                     A2 = dto.A2,
@@ -58,19 +58,19 @@ namespace Infrastructure.Services
             }
         }
 
-        public async Task<MainResponse> GetAllQuestionsByExamIdAsync(int examId)
+        public async Task<MainResponse> GetAllQuestionsBySubjectIdAsync(int subjectId)
         {
             MainResponse response = new MainResponse();
             try
             {
-                var exam = await _unitOfWork.ExamRepository.GetFirstAsync(a => a.Id == examId);
-                if (exam is null)
+                var subject = await _unitOfWork.SubjectRepository.GetFirstAsync(a => a.Id == subjectId);
+                if (subject is null)
                 {
-                    response.Messages.Add("Invalid Exam ID");
+                    response.Messages.Add("Invalid Subject ID");
                     return response;
                 }
 
-                var data = await _unitOfWork.QuestionRepository.GetWhereAsync(a => a.ExamId == examId, null);
+                var data = await _unitOfWork.QuestionRepository.GetWhereAsync(a => a.SubjectId == subjectId, null);
 
                 response.IsSuccess = true;
                 response.Data = data;
@@ -118,7 +118,7 @@ namespace Infrastructure.Services
                     return response;
                 }
 
-                question.ExamId = dto.ExamId;
+                question.SubjectId = dto.SubjectId;
                 question.QuestionName = dto.QuestionName;
                 question.A1 = dto.A1;
                 question.A2 = dto.A2;
@@ -141,12 +141,12 @@ namespace Infrastructure.Services
             }
         }
 
-        public async Task<MainResponse> RemoveQuestionByIdAsync(int id)
+        public async Task<MainResponse> RemoveQuestionByIdAsync(DeleteQuestionDTO dto)
         {
             MainResponse response = new MainResponse();
             try
             {
-                var question = await _unitOfWork.QuestionRepository.GetFirstAsync(a => a.Id == id);
+                var question = await _unitOfWork.QuestionRepository.GetFirstAsync(a => a.Id == dto.Id);
                 if (question is null)
                 {
                     response.Messages.Add("Invalid question ID");

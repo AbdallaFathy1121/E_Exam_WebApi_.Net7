@@ -10,6 +10,6 @@ namespace Application.Interfaces.Repositories
 {
     public interface IJWTManagerRepository
     {
-        GenerateToken Authenticate(User user);
+        Task<GenerateToken> AuthenticateAsync(User user);
     }
 }

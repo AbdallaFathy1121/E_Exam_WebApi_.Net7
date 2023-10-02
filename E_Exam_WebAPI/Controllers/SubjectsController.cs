@@ -41,7 +41,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Subjects/Add
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("Add")]
         public async Task<IActionResult> AddNewSubjectAsync([FromBody] AddSubjectDTO dto)
         {
@@ -53,7 +53,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Subjects/5/Update
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("{id}/Update")]
         public async Task<IActionResult> UpdateSubjectAsync(int id, [FromBody] UpdateSubjectDTO dto)
         {
@@ -65,7 +65,7 @@ namespace E_Exam_WebAPI.Controllers
         }
 
         // POST api/Subjects/Delete
-        [Authorize(Roles = Roles.Admin)]
+        [Authorize(Roles = Roles.Teacher)]
         [HttpPost("Delete")]
         public async Task<IActionResult> DeleteSubjectAsync(DeleteSubjectDTO dto)
         {

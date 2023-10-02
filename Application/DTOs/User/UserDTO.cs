@@ -10,7 +10,8 @@ namespace Application.DTOs.User
     (
         string Id,
         string Email,
-        string Name,
-        bool IsTeacher
+        string FullName,
+        bool IsTeacher,
+        IList<string> Roles
     );
 }

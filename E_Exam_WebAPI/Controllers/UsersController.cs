@@ -29,6 +29,18 @@ namespace E_Exam_WebAPI.Controllers
             return BadRequest(result);
         }
 
+        // GET: api/Users/{Id}
+        [Authorize]
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetUserByIdAsync(string id)
+        {
+            var result = await _userService.GetUserByIdAsync(id);
+            if (result.IsSuccess)
+                return Ok(result);
+
+            return BadRequest(result);
+        }
+
         // POST api/Users/Register
         [HttpPost("Register")]
         public async Task<IActionResult> RegisterAsync([FromBody] RegisterDTO dto)

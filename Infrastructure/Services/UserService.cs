@@ -4,14 +4,9 @@ using Application.Interfaces.Repositories;
 using Application.Interfaces.Services;
 using Domain.Constants;
 using Domain.Entities;
-using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Infrastructure.Services
 {
@@ -39,7 +34,7 @@ namespace Infrastructure.Services
             try
             {
                 var users = await _userManager.Users
-                    .Select(a=> new UserDTO(a.Id, a.Email!, a.Name, a.IsTeacher))
+                    .Select(a=> new UserDTO(a.Id, a.Email!, a.Name, a.IsTeacher, null))
                     .ToListAsync();
 
                 response.IsSuccess = true;
@@ -72,7 +67,7 @@ namespace Infrastructure.Services
                     {
                         Email = dto.Email,
                         UserName = dto.Email,
-                        Name = dto.Name,
+                        Name = dto.FullName,
                         IsTeacher = dto.IsTeacher
                     };
                     
@@ -125,7 +120,8 @@ namespace Infrastructure.Services
                     SignInResult result = await _signInManager.PasswordSignInAsync(user, dto.Password, false, true);
                     if (result.Succeeded)
                     {
-                        GenerateToken generateToken = _jwtRepository.Authenticate(user);
+                        GenerateToken generateToken = await _jwtRepository.AuthenticateAsync(user);
+
                         response.IsSuccess = true;
                         response.Messages.Add("Login Successfully!");
                         response.Data = generateToken;
@@ -171,6 +167,39 @@ namespace Infrastructure.Services
                         return response;
                     }
                 }
+            }
+            catch (Exception ex)
+            {
+                response.Messages.Add(ex.Message);
+                return response;
+            }
+        }
+
+        public async Task<MainResponse> GetUserByIdAsync(string id)
+        {
+            MainResponse response = new MainResponse();
+            try
+            {
+                var result = await _userManager.FindByIdAsync(id);
+                if (result is null)
+                {
+                    response.Messages.Add("Not Found User");
+                    return response;
+                }
+
+                var roles = await _userManager.GetRolesAsync(result);
+
+                var user = new UserDTO (
+                    id,
+                    result.Email,
+                    result.Name,
+                    result.IsTeacher,
+                    roles
+                );
+
+                response.IsSuccess = true;
+                response.Data = user;
+                return response;
             }
             catch (Exception ex)
             {

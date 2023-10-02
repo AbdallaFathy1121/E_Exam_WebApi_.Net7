@@ -15,10 +15,10 @@ namespace Domain.Entities
         public string? A3 { get; set; }
         public string? A4 { get; set; }
         public string CorrectAnswer { get; set; }
-        public int ExamId { get; set; }
+        public int SubjectId { get; set; }
 
 
         // Relations
-        public virtual Exam? Exam { get; set; }
+        public virtual Subject? Subject { get; set; }
     }
 }

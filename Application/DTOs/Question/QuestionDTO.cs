@@ -15,6 +15,6 @@ namespace Application.DTOs.Question
         public string? A3 { get; set; }
         public string? A4 { get; set; }
         public string CorrectAnswer { get; set; }
-        public object? Exam { get; set; }
+        public object? Subject { get; set; }
     }
 }

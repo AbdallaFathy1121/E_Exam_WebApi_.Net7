@@ -6,14 +6,17 @@ using System.Threading.Tasks;
 
 namespace Domain.Entities
 {
-    public class SubjectLevel
+    public class StudentDegree
     {
         public int Id { get; set; }
-        public int LevelId { get; set; }
+        public int Degree { get; set; }
+        public int ExamDegree { get; set; }
+
         public int SubjectId { get; set; }
+        public string UserId { get; set; }
 
         // Relations
-        public virtual Level? Level { get; set; } = null;
-        public virtual Subject? Subject { get; set; } = null;
+        public virtual Subject? Subject { get; set; }
+        public virtual User? User { get; set; }
     }
 }
